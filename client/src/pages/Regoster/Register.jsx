@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import css from "./Register.module.css";
-import google from "../../../public/google.svg";
-import facebook from "../../../public/face.svg";
-import link from "../../../public/link.svg";
+import google from "../../assets/google.svg";
+import facebook from "../../assets/face.svg";
+import link from "../../assets/link.svg";
 
 const Register = () => {
   const [email, setEmail] = useState("");
