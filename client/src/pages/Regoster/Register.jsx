@@ -34,6 +34,7 @@ const Register = () => {
           <span className={css.labelText}>Email</span>
           <input className={css.input} id="email" type="text" name="email" placeholder="john.brown@gmail.com" />
         </label>
+        <button className={css.btn1}>Sign in</button>
       </form>
     </div>
   );

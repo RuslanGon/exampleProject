@@ -66,35 +66,35 @@
 }
 
 .hr {
-width: 184px;
+    width: 184px;
 }
 
 .span {
     color: var(--text-secondary, rgba(0, 0, 0, 0.60));
-font-family: Inter;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 143%; 
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 143%;
 }
 
 .field {
     position: relative;
     display: block;
     width: 100%;
-  }
-  
-  .labelText {
+}
+
+.labelText {
     position: absolute;
-    top: -10px;          /* поднимаем над инпутом */
-    left: 12px;          /* отступ слева */
-    background: #fff;    
-    padding: 0 4px;     
+    top: -10px;
+    left: 12px;
+    background: #fff;
+    padding: 0 4px;
     font-size: 14px;
     color: var(--text-primary, rgba(0, 0, 0, 0.87));
-  }
-  
-  .input {
+}
+
+.input {
     width: 100%;
     padding: 12px 16px;
     border-radius: var(--borderRadius, 12px);
@@ -102,4 +102,20 @@ line-height: 143%;
     background-color: transparent;
     box-sizing: border-box;
     font-size: 16px;
-  }
+    margin-bottom: 12px;
+}
+
+.btn1 {
+    display: flex;
+    padding: 8px 22px;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    border-radius: var(--borderRadius, 12px);
+    border: 1px solid var(--secondary-_states-outlinedBorder, #E0E0E0);
+    gap: 9px;
+    margin-bottom: 12px;
+    background: var(--action-disabledBackground, rgba(0, 0, 0, 0.12));
+    color: var(--primary-contrastText, #FFF);
+    background-color: #000;
+}
