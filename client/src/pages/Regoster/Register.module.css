@@ -11,6 +11,14 @@ align-items: center;
 /* gap: 10px; */
 }
 
+.form {
+    display: flex;
+width: 410px;
+flex-direction: column;
+align-items: center;
+
+}
+
 .title {
 color: #000;
 text-align: center;
@@ -29,4 +37,5 @@ font-size: 16px;
 font-style: normal;
 font-weight: 400;
 line-height: 24px;
+margin-bottom: 56px;
 }
