@@ -1,18 +1,22 @@
 // import styled from "styled-components";
 
+// // Контейнер формы
 // export const Container = styled.div`
 //   width: 628px;
 //   border-radius: 20px;
 //   border: 1px solid #E0E0E0;
-//   background: #fff;
+//   background: #FFF;
 //   display: flex;
 //   padding: 70px 109px;
 //   justify-content: center;
 
+//   @media (max-width: 768px) {
+//     width: 90%;
+//     padding: 40px 20px;
+//   }
+
 //   @media (max-width: 480px) {
-//     width: 100%;
-//     padding: 30px 20px;
-//     border-radius: 0;
+//     padding: 30px 10px;
 //   }
 // `;
 
@@ -22,7 +26,7 @@
 //   flex-direction: column;
 //   align-items: center;
 
-//   @media (max-width: 480px) {
+//   @media (max-width: 768px) {
 //     width: 100%;
 //   }
 // `;
@@ -36,8 +40,13 @@
 //   line-height: 133.4%;
 //   margin-bottom: 22px;
 
-//   @media (max-width: 480px) {
+//   @media (max-width: 768px) {
 //     font-size: 20px;
+//     margin-bottom: 16px;
+//   }
+
+//   @media (max-width: 480px) {
+//     font-size: 18px;
 //   }
 // `;
 
@@ -49,39 +58,50 @@
 //   line-height: 24px;
 //   margin-bottom: 56px;
 
-//   @media (max-width: 480px) {
+//   @media (max-width: 768px) {
 //     font-size: 14px;
-//     line-height: 20px;
-//     margin-bottom: 30px;
+//     margin-bottom: 32px;
+//   }
+
+//   @media (max-width: 480px) {
+//     font-size: 13px;
 //   }
 // `;
 
-// export const Button = styled.button<{ bg?: string }>`
+// export const Button = styled.button<{ disabledBg?: string; disabledColor?: string }>`
 //   display: flex;
 //   padding: 8px 22px;
-//   background-color: ${(props) => props.bg || "transparent"};
 //   justify-content: center;
 //   align-items: center;
 //   border-radius: 12px;
 //   border: 1px solid #E0E0E0;
 //   gap: 9px;
 //   margin-bottom: 12px;
-//   color: #fff;
+//   background-color: ${(props) => props.disabledBg || "transparent"};
+//   color: ${(props) => props.disabledColor || "#fff"};
 //   cursor: pointer;
 
-//   @media (max-width: 480px) {
+//   @media (max-width: 768px) {
 //     padding: 8px 16px;
-//     font-size: 14px;
 //   }
+
+//   @media (max-width: 480px) {
+//     padding: 6px 10px;
+//   }
+// `;
+
+// export const BtnSubmit = styled(Button)`
+//   background-color: #000;
+//   color: #fff;
 // `;
 
 // export const Logo = styled.img`
 //   width: 20px;
 //   height: 20px;
 
-//   @media (max-width: 480px) {
-//     width: 16px;
-//     height: 16px;
+//   @media (max-width: 768px) {
+//     width: 18px;
+//     height: 18px;
 //   }
 // `;
 
@@ -90,17 +110,12 @@
 //   align-items: center;
 //   gap: 12px;
 //   margin-bottom: 12px;
-
-//   @media (max-width: 480px) {
-//     gap: 8px;
-//     margin-bottom: 10px;
-//   }
 // `;
 
 // export const Hr = styled.hr`
 //   width: 184px;
 
-//   @media (max-width: 480px) {
+//   @media (max-width: 768px) {
 //     width: 100px;
 //   }
 // `;
@@ -111,7 +126,7 @@
 //   font-size: 14px;
 //   font-weight: 400;
 
-//   @media (max-width: 480px) {
+//   @media (max-width: 768px) {
 //     font-size: 12px;
 //   }
 // `;
@@ -130,11 +145,6 @@
 //   padding: 0 4px;
 //   font-size: 14px;
 //   color: rgba(0, 0, 0, 0.87);
-
-//   @media (max-width: 480px) {
-//     font-size: 12px;
-//     top: -8px;
-//   }
 // `;
 
 // export const Input = styled.input`
@@ -147,9 +157,18 @@
 //   font-size: 16px;
 //   margin-bottom: 12px;
 
-//   @media (max-width: 480px) {
+//   &:focus {
+//     outline: none;
+//   }
+
+//   @media (max-width: 768px) {
 //     padding: 10px 12px;
 //     font-size: 14px;
+//   }
+
+//   @media (max-width: 480px) {
+//     padding: 8px 10px;
+//     font-size: 13px;
 //   }
 // `;
 
@@ -158,19 +177,6 @@
 //   font-size: 13px;
 //   color: red;
 //   margin-bottom: 12px;
-
-//   @media (max-width: 480px) {
-//     font-size: 12px;
-//     margin-bottom: 8px;
-//   }
-// `;
-
-// export const Btn1 = styled(Button)`
-//   background-color: #000;
-
-//   @media (max-width: 480px) {
-//     font-size: 14px;
-//   }
 // `;
 
 // export const Text1 = styled.p`
@@ -181,8 +187,7 @@
 //   font-weight: 500;
 //   line-height: 157%;
 
-//   @media (max-width: 480px) {
+//   @media (max-width: 768px) {
 //     font-size: 12px;
-//     line-height: 20px;
 //   }
 // `;

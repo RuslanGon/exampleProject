@@ -8,6 +8,7 @@
 //   Title,
 //   Text,
 //   Button,
+//   BtnSubmit,
 //   Logo,
 //   DivOr,
 //   Hr,
@@ -16,7 +17,6 @@
 //   LabelText,
 //   Input,
 //   Error,
-//   Btn1,
 //   Text1,
 // } from "./RegisterStyles";
 
@@ -82,7 +82,17 @@
 //         </Field>
 //         {error && <Error>{error}</Error>}
 
-//         <Btn1 type="submit">Sign in</Btn1>
+//         <BtnSubmit
+//           type="submit"
+//           disabled={!email || !!error}
+//           style={{
+//             backgroundColor: !email || !!error ? "rgba(0,0,0,0.12)" : "#000",
+//             color: !email || !!error ? "rgba(0,0,0,0.38)" : "#fff",
+//             cursor: !email || !!error ? "not-allowed" : "pointer",
+//           }}
+//         >
+//           Sign in
+//         </BtnSubmit>
 
 //         <Text1>
 //           By continuing you agree to system Privacy Policy and Terms&Conditions
