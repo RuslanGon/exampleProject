@@ -10,9 +10,14 @@ const Register = () => {
         <form className={css.form} action="">
             <h1 className={css.title}>Welcome to PlasmAI</h1>
             <p className={css.text}>Sign in to access your personalized blood test <br /> analysis. Your data is secure and private</p>
-            <button><img src={google}  alt="" />Sign in with Google</button>
-            <button><img src={facebook} alt="" />Sign in with Facebook</button>
-            <button><img src={link} alt="" />Sign in with Linkedin</button>
+            <button className={css.btn}><img className={css.logo} src={google}  alt="" />Sign in with Google</button>
+            <button className={css.btn}><img className={css.logo} src={facebook} alt="" />Sign in with Facebook</button>
+            <button className={css.btn}><img className={css.logo} src={link} alt="" />Sign in with Linkedin</button>
+            <div className={css.div_or}>
+                <hr className={css.hr} />
+                <span className={css.span}>Or</span>
+                <hr className={css.hr} />
+            </div>
         </form>
 
     </div>
