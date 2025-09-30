@@ -18,6 +18,10 @@ const Register = () => {
                 <span className={css.span}>Or</span>
                 <hr className={css.hr} />
             </div>
+            <label className={css.lable} htmlFor="email">Email
+            <input className={css.input} id="email" type="text" name="email" />
+            </label>
+           
         </form>
 
     </div>
