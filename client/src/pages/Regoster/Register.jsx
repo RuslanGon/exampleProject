@@ -35,6 +35,7 @@ const Register = () => {
           <input className={css.input} id="email" type="text" name="email" placeholder="john.brown@gmail.com" />
         </label>
         <button className={css.btn1}>Sign in</button>
+        <p className={css.text}>By continuing you agree to system Privacy Policy and Terms&Conditions</p>
       </form>
     </div>
   );

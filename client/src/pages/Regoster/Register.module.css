@@ -7,7 +7,7 @@
     display: flex;
     padding: 70px 109px;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .form {
@@ -118,4 +118,5 @@
     background: var(--action-disabledBackground, rgba(0, 0, 0, 0.12));
     color: var(--primary-contrastText, #FFF);
     background-color: #000;
+    margin-bottom: 28px;
 }
