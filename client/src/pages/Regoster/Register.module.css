@@ -1,13 +1,11 @@
 .container {
     width: 628px;
-    height: 658px;
     border-radius: 20px;
     border: 1px solid var(--elevation-outlined, #E0E0E0);
     background: var(--background-paper-elevation-2, #FFF);
     display: flex;
     padding: 70px 109px;
     justify-content: center;
-    /* align-items: center; */
 }
 
 .form {
@@ -119,4 +117,14 @@
     color: var(--primary-contrastText, #FFF);
     background-color: #000;
     margin-bottom: 28px;
+}
+
+.text1 {
+    color: var(--Black, #161010);
+text-align: center;
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 157%; 
 }
