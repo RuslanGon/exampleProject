@@ -5,7 +5,8 @@ import { AppService } from './app.service';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGODB_URI!), 
+    // Подключаем MongoDB через Mongoose
+    MongooseModule.forRoot(process.env.MONGODB_URI!),
   ],
   controllers: [AppController],
   providers: [AppService],
