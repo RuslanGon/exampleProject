@@ -4,25 +4,30 @@ import google from "../../../public/google.svg";
 import facebook from "../../../public/face.svg";
 import link from "../../../public/link.svg";
 
+const handleSubmit = (e) => {
+    e.preventDefault();
+    // TODO: вызвать API для логина
+  };
+
 const Register = () => {
   return (
     <div className={css.container}>
-      <form className={css.form} action="">
+      <form className={css.form} onSubmit={handleSubmit}>
         <h1 className={css.title}>Welcome to PlasmAI</h1>
         <p className={css.text}>
           Sign in to access your personalized blood test <br /> analysis. Your
           data is secure and private
         </p>
         <button className={css.btn}>
-          <img className={css.logo} src={google} alt="" />
+          <img className={css.logo} src={google} alt="google" />
           Sign in with Google
         </button>
         <button className={css.btn}>
-          <img className={css.logo} src={facebook} alt="" />
+          <img className={css.logo} src={facebook} alt="facebook" />
           Sign in with Facebook
         </button>
         <button className={css.btn}>
-          <img className={css.logo} src={link} alt="" />
+          <img className={css.logo} src={link} alt="link" />
           Sign in with Linkedin
         </button>
         <div className={css.div_or}>
@@ -32,9 +37,9 @@ const Register = () => {
         </div>
         <label className={css.field}>
           <span className={css.labelText}>Email</span>
-          <input className={css.input} id="email" type="text" name="email" placeholder="john.brown@gmail.com" />
+          <input className={css.input}  id="email" type="email" name="email" placeholder="john.brown@gmail.com" />
         </label>
-        <button className={css.btn1}>Sign in</button>
+        <button type="submit" className={css.btn1}>Sign in</button>
         <p className={css.text1}>By continuing you agree to system Privacy Policy and Terms&Conditions</p>
       </form>
     </div>
