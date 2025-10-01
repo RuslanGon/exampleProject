@@ -2,9 +2,11 @@ import { useState } from 'react'
 
 
 import './App.css'
-import Register from './pages/Regoster/Register.jsx'
+
 import { Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage/HomePage.jsx'
+import Register from './pages/Regoster/Register.jsx'
+
 
 function App() {
 
@@ -12,7 +14,6 @@ function App() {
   <Routes>
      <Route path="/" element={<HomePage />} />
      <Route path="/register" element={<Register />} />
-
   </Routes>
   )
 }
