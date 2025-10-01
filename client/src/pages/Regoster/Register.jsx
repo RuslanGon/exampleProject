@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
-import * as jwt_decode from "jwt-decode"; // для Vite
+import { useNavigate } from "react-router-dom";
+import * as jwt_decode from "jwt-decode"; 
 import css from "./Register.module.css";
 import google from "../../assets/google.svg";
 import facebook from "../../assets/face.svg";
 import link from "../../assets/link.svg";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
@@ -34,6 +36,7 @@ const Register = () => {
         const data = await res.json();
         console.log("JWT от бекенда:", data);
         localStorage.setItem("token", data.access_token);
+        navigate("/main");
       } catch (err) {
         console.error(err);
       }
