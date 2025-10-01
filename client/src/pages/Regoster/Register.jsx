@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { GoogleLogin } from "@react-oauth/google";
+import * as jwt_decode from "jwt-decode"; // для Vite
 import css from "./Register.module.css";
 import google from "../../assets/google.svg";
 import facebook from "../../assets/face.svg";
@@ -20,33 +22,50 @@ const Register = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!error && email) {
-      // TODO: вызвать API для логина
-      console.log("Отправка email:", email);
+      try {
+        const res = await fetch("http://localhost:5000/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json();
+        console.log("JWT от бекенда:", data);
+        localStorage.setItem("token", data.access_token);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
-  const onClickGoogle = (e) => {
+  const handleGoogleSuccess = async (credentialResponse) => {
+    const token = credentialResponse.credential;
+    const decoded = jwt_decode.default(token); 
+    console.log("Google user:", decoded);
 
-    // TODO: вызвать API для логина
-    console.log("Регистрация по Google:");
+    try {
+      const res = await fetch("http://localhost:5000/auth/google", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+      const data = await res.json();
+      console.log("JWT от бекенда:", data);
+      localStorage.setItem("token", data.access_token);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const onClickFacebook = (e) => {
-
-    // TODO: вызвать API для логина
-    console.log("Регистрация по Facebook:");
+  const handleGoogleError = () => {
+    console.log("Google Login Failed");
   };
 
-  const onClickLink = (e) => {
-
-    // TODO: вызвать API для логина
-    console.log("Регистрация по Link:");
-  };
-
-
+  const onClickGoogle = () => console.log("Регистрация по Google:");
+  const onClickFacebook = () => console.log("Регистрация по Facebook:");
+  const onClickLink = () => console.log("Регистрация по Linkedin:");
 
   return (
     <div className={css.container}>
@@ -89,6 +108,7 @@ const Register = () => {
           />
         </label>
         {error && <span className={css.error}>{error}</span>}
+
         <button
           type="submit"
           className={css.btn1}
@@ -101,6 +121,7 @@ const Register = () => {
         >
           Sign in
         </button>
+
         <p className={css.text1}>
           By continuing you agree to system Privacy Policy and Terms&Conditions
         </p>
