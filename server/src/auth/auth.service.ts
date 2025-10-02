@@ -22,19 +22,27 @@ export class AuthService {
       await user.save();
 
       const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
+        host: 'smtp-relay.brevo.com',
+        port: 587,
+        secure: false, // true для 465
         auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS,
+          user: process.env.SMTP_LOGIN,
+          pass: process.env.SMTP_PASS,
         },
       });
 
-      const verifyUrl = `http://localhost:5173/verify/${token}`;
+      // Проверяем соединение сразу
+      transporter.verify((error, success) => {
+        if (error) {
+          console.error('SMTP connection failed:', error);
+        } else {
+          console.log('SMTP ready to send messages');
+        }
+      });
 
+      const verifyUrl = `http://localhost:5173/verify/${token}`;
       const mailOptions = {
-        from: `"PlasmAI" <${process.env.EMAIL_USER}>`,
+        from: `"PlasmAI" <${process.env.SMTP_LOGIN}>`,
         to: email,
         subject: 'Verify your email',
         html: `Click <a href="${verifyUrl}">here</a> to verify your email.`,
@@ -49,7 +57,7 @@ export class AuthService {
       }
     }
 
-    return { message: 'Check your email to verify account.' };
+    return { message: 'Check your email to verify your account.' };
   }
 
   async verifyUser(token: string) {

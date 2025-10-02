@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-import * as jwt_decode from "jwt-decode"; 
+import { jwtDecode } from "jwt-decode"; 
 import css from "./Register.module.css";
 import google from "../../assets/google.svg";
 import facebook from "../../assets/face.svg";
@@ -11,7 +11,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const [info, setInfo] = useState(""); // для сообщения о ссылке
+  const [info, setInfo] = useState(""); // сообщение от бекенда
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -29,25 +29,29 @@ const Register = () => {
     e.preventDefault();
     if (!error && email) {
       try {
-        const res = await fetch("http://localhost:5000/auth/send-verification", { 
+        const res = await fetch("http://localhost:5000/auth/send-verification", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
         const data = await res.json();
         console.log("Ответ от бекенда:", data);
-        // после успешной отправки ссылки можно показывать уведомление
-        alert("Ссылка для входа отправлена на email");
+
+        if (res.ok) {
+          setInfo(data.message); // ✅ вместо alert
+        } else {
+          setError(data.error || "Something went wrong");
+        }
       } catch (err) {
         console.error(err);
+        setError("Server error");
       }
     }
   };
-  
 
   const handleGoogleSuccess = async (credentialResponse) => {
     const token = credentialResponse.credential;
-    const decoded = jwt_decode.default(token); 
+    const decoded = jwtDecode(token);
     console.log("Google user:", decoded);
 
     try {
@@ -69,6 +73,7 @@ const Register = () => {
     console.log("Google Login Failed");
   };
 
+  // заглушки для соцсетей
   const onClickGoogle = () => console.log("Регистрация по Google:");
   const onClickFacebook = () => console.log("Регистрация по Facebook:");
   const onClickLink = () => console.log("Регистрация по Linkedin:");
