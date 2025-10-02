@@ -1,29 +1,59 @@
 import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
+import * as crypto from 'crypto';
+import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private jwtService: JwtService,
-    @InjectModel(User.name) private userModel: Model<User>,
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  async login(email: string) {
+  async sendVerificationEmail(email: string) {
+    // Ищем пользователя или создаем нового
     let user = await this.userModel.findOne({ email });
-
     if (!user) {
       user = new this.userModel({ email });
-      await user.save();
     }
 
-    const payload = { sub: user._id, email: user.email };
+    // Создаем токен для подтверждения
+    const token = crypto.randomBytes(32).toString('hex');
+    user.verificationToken = token;
+    await user.save();
 
-    return {
-      access_token: this.jwtService.sign(payload),
-      user,
+    // Настраиваем nodemailer
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,      // твой email
+        pass: process.env.EMAIL_PASSWORD,  // пароль приложения Gmail
+      },
+    });
+
+    const verificationLink = `http://localhost:5173/verify/${token}`;
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Verify your email',
+      html: `<p>Click <a href="${verificationLink}">here</a> to verify your email.</p>`,
     };
+
+    await transporter.sendMail(mailOptions);
+
+    return { message: `Verification email sent to ${email}` };
+  }
+
+  async verifyEmail(token: string) {
+    const user = await this.userModel.findOne({ verificationToken: token });
+    if (!user) {
+      return { error: 'Invalid token' };
+    }
+
+    user.isVerified = true;
+    user.verificationToken = null;
+    await user.save();
+
+    return { message: 'Email verified successfully' };
   }
 }
