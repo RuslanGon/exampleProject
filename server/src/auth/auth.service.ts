@@ -21,10 +21,8 @@ export class AuthService {
     let user = await this.userModel.findOne({ email });
 
     if (!user) {
-      // если пользователь новый — создаем его
       user = new this.userModel({ email, verificationToken: token });
     } else {
-      // если пользователь уже есть — обновляем токен
       user.verificationToken = token;
     }
 
@@ -34,7 +32,7 @@ export class AuthService {
     const transporter = nodemailer.createTransport({
       host: 'smtp-relay.brevo.com',
       port: 587,
-      secure: false, // TLS автоматически включается при port 587
+      secure: false, 
       auth: {
         user: process.env.SMTP_LOGIN,
         pass: process.env.SMTP_PASS,
