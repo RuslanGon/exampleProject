@@ -69,8 +69,11 @@ export class AuthService {
     user.verificationToken = null;
     await user.save();
 
+
     const payload = { sub: user._id, email: user.email };
     const access_token = this.jwtService.sign(payload, { expiresIn: '24h' });
+
+// change
 
     return { access_token, user };
   }
