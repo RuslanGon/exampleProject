@@ -14,40 +14,48 @@ export class AuthService {
   ) {}
 
   async sendVerificationEmail(email: string) {
+    // генерируем новый токен
+    const token = randomBytes(32).toString('hex');
+
+    // ищем пользователя
     let user = await this.userModel.findOne({ email });
 
     if (!user) {
-      const token = randomBytes(32).toString('hex');
+      // если пользователь новый — создаем его
       user = new this.userModel({ email, verificationToken: token });
-      await user.save();
+    } else {
+      // если пользователь уже есть — обновляем токен
+      user.verificationToken = token;
+    }
 
-      // Используем Brevo SMTP
-      const transporter = nodemailer.createTransport({
-        host: 'smtp-relay.brevo.com',
-        port: 587,
-        secure: false, // для 587 обязательно false
-        auth: {
-          user: process.env.SMTP_LOGIN,
-          pass: process.env.SMTP_PASS,
-        },
-      });
+    await user.save();
 
-      const verifyUrl = `http://localhost:5173/verify/${token}`;
+    // создаем транспортер для Brevo SMTP
+    const transporter = nodemailer.createTransport({
+      host: 'smtp-relay.brevo.com',
+      port: 587,
+      secure: false, // TLS автоматически включается при port 587
+      auth: {
+        user: process.env.SMTP_LOGIN,
+        pass: process.env.SMTP_PASS,
+      },
+    });
 
-      const mailOptions = {
-        from: `"PlasmAI" <${process.env.SMTP_LOGIN}>`,
-        to: email,
-        subject: 'Verify your email',
-        html: `Click <a href="${verifyUrl}">here</a> to verify your email.`,
-      };
+    const verifyUrl = `http://localhost:5173/verify/${token}`;
 
-      try {
-        const info = await transporter.sendMail(mailOptions);
-        console.log(`Verification email sent to ${email}`, info.messageId);
-      } catch (err) {
-        console.error(`Failed to send verification email to ${email}:`, err);
-        throw new Error('Failed to send verification email');
-      }
+    const mailOptions = {
+      from: `"PlasmAI" <${process.env.SMTP_LOGIN}>`,
+      to: email,
+      subject: 'Verify your email',
+      html: `Click <a href="${verifyUrl}">here</a> to verify your email.`,
+    };
+
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log(`Verification email sent to ${email}`);
+    } catch (err) {
+      console.error(`Failed to send verification email to ${email}:`, err);
+      throw new Error('Failed to send verification email');
     }
 
     return { message: 'Check your email to verify your account.' };
