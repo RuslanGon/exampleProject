@@ -7,12 +7,12 @@ export class AuthController {
 
   @Post('send-verification')
   async sendVerification(@Body('email') email: string) {
-    if (!email) return { error: 'Email is required' };
+    if (!email) return { error: 'Email required' };
     return this.authService.sendVerificationEmail(email);
   }
 
   @Get('verify/:token')
-  async verifyEmail(@Param('token') token: string) {
-    return this.authService.verifyEmail(token);
+  async verify(@Param('token') token: string) {
+    return this.authService.verifyUser(token);
   }
 }
