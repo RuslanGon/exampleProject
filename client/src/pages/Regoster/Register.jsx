@@ -11,6 +11,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [info, setInfo] = useState(""); // для сообщения о ссылке
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -33,12 +34,27 @@ const Register = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.message || "Server error");
+        }
+
         const data = await res.json();
         console.log("JWT от бекенда:", data);
-        localStorage.setItem("token", data.access_token);
-        navigate("/main");
+
+        if (data.access_token) {
+          // Если сразу авторизуем после верификации
+          localStorage.setItem("token", data.access_token);
+          navigate("/main");
+        } else {
+          // Если нужно кликнуть по ссылке из email
+          setInfo("Ссылка для входа отправлена на ваш email. Проверьте почту.");
+        }
+
       } catch (err) {
         console.error(err);
+        setError(err.message);
       }
     }
   };
@@ -57,6 +73,7 @@ const Register = () => {
       const data = await res.json();
       console.log("JWT от бекенда:", data);
       localStorage.setItem("token", data.access_token);
+      navigate("/main");
     } catch (err) {
       console.error(err);
     }
@@ -111,6 +128,7 @@ const Register = () => {
           />
         </label>
         {error && <span className={css.error}>{error}</span>}
+        {info && <span style={{ color: "green" }}>{info}</span>}
 
         <button
           type="submit"
