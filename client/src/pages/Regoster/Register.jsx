@@ -11,7 +11,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const [info, setInfo] = useState(""); // сообщение от бекенда
+  const [info, setInfo] = useState(""); 
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -38,7 +38,7 @@ const Register = () => {
         console.log("Ответ от бекенда:", data);
 
         if (res.ok) {
-          setInfo(data.message); // ✅ вместо alert
+          setInfo(data.message); 
         } else {
           setError(data.error || "Something went wrong");
         }
