@@ -29,35 +29,21 @@ const Register = () => {
     e.preventDefault();
     if (!error && email) {
       try {
-        const res = await fetch("http://localhost:5000/auth/login", {
+        const res = await fetch("http://localhost:5000/auth/send-verification", { 
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
-
-        if (!res.ok) {
-          const errData = await res.json();
-          throw new Error(errData.message || "Server error");
-        }
-
         const data = await res.json();
-        console.log("JWT от бекенда:", data);
-
-        if (data.access_token) {
-          // Если сразу авторизуем после верификации
-          localStorage.setItem("token", data.access_token);
-          navigate("/main");
-        } else {
-          // Если нужно кликнуть по ссылке из email
-          setInfo("Ссылка для входа отправлена на ваш email. Проверьте почту.");
-        }
-
+        console.log("Ответ от бекенда:", data);
+        // после успешной отправки ссылки можно показывать уведомление
+        alert("Ссылка для входа отправлена на email");
       } catch (err) {
         console.error(err);
-        setError(err.message);
       }
     }
   };
+  
 
   const handleGoogleSuccess = async (credentialResponse) => {
     const token = credentialResponse.credential;
