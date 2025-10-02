@@ -21,26 +21,19 @@ export class AuthService {
       user = new this.userModel({ email, verificationToken: token });
       await user.save();
 
+      // Используем Brevo SMTP
       const transporter = nodemailer.createTransport({
         host: 'smtp-relay.brevo.com',
         port: 587,
-        secure: false, // true для 465
+        secure: false, // для 587 обязательно false
         auth: {
           user: process.env.SMTP_LOGIN,
           pass: process.env.SMTP_PASS,
         },
       });
 
-      // Проверяем соединение сразу
-      transporter.verify((error, success) => {
-        if (error) {
-          console.error('SMTP connection failed:', error);
-        } else {
-          console.log('SMTP ready to send messages');
-        }
-      });
-
       const verifyUrl = `http://localhost:5173/verify/${token}`;
+
       const mailOptions = {
         from: `"PlasmAI" <${process.env.SMTP_LOGIN}>`,
         to: email,
@@ -49,8 +42,8 @@ export class AuthService {
       };
 
       try {
-        await transporter.sendMail(mailOptions);
-        console.log(`Verification email sent to ${email}`);
+        const info = await transporter.sendMail(mailOptions);
+        console.log(`Verification email sent to ${email}`, info.messageId);
       } catch (err) {
         console.error(`Failed to send verification email to ${email}:`, err);
         throw new Error('Failed to send verification email');
